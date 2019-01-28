@@ -57,6 +57,7 @@ mount_image() {
 actions() {
 	echo
 	cat <<EOD
+c) Enable/Disable Magisk Core Mode
 e) Enable/disable modules
 l) List installed modules
 m) Make magisk.img survive f. resets
@@ -155,6 +156,7 @@ opts() {
 	actions
 
 	case "$Input" in
+		c ) magiskcore;;
 		e ) enable_disable_mods;;
 		l ) list_mods;;
 		m ) immortal_m;;
@@ -168,6 +170,39 @@ opts() {
 	
 	exit_or_not
 }
+
+magiskcore() {
+	corefile="/cache/.disable_magisk"
+
+	# check if cache is mounted, and if not, mount it
+	if ! mount | grep -q cache; then
+		mount cache
+	fi
+
+	# start to check files for enabling/disabling magisk core
+	if [ ! -e $corefile ] ; then
+		echo -e "\n(i) Magisk Core is OFF; do you want to enable it? (y/N)"
+		read corestatus
+		if [ $corestatus = "y" ]; then
+		 	touch $corefile
+			echo -e "\n(i) Magisk Core enabled!"
+			exit_or_not
+		else 
+			exit_or_not
+		fi
+	else
+		echo -e "\n(i) Magisk Core is ON; do you want to disable it? (y/N)"
+		read corestatus
+		if [ $corestatus = "y" ]; then
+		 	rm $corefile
+			echo -e "\n(i) Magisk Core disabled!"
+			exit_or_not
+		else
+			exit_or_not
+		fi
+	fi
+}
+
 
 
 resize_img() {
