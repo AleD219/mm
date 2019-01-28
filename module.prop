@@ -1,7 +1,7 @@
 id=mmfork
 name=Magisk Manager for Recovery Mode (mm) [AleD219 fork]
-version=2018.8.1
-versionCode=201808010
+version=2019.01.28
+versionCode=201908028
 author=VR25 @ xda-developers; AleD219
 description=Manage your Magisk image, data, modules & settings from recovery mode -- run "/data/media/mm" on terminal.
 minMagisk=1500
